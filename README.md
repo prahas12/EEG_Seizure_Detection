@@ -24,10 +24,16 @@ run_demo
 ## Pipeline & Features
 
 ### Processing Pipeline
-```
-Raw EDF --> Band-pass / Notch Filter --> Artifact Removal --> Windowing (4s, 50% overlap)
-  --> Feature Extraction (time + frequency + wavelet) --> Classification (RF / SVM / KNN)
-  --> Temporal Post-processing --> Seizure Event Detection --> Evaluation Metrics
+
+```mermaid
+flowchart TD
+    A[Raw EDF Recording] --> B[Preprocessing: Band-pass & Notch Filter]
+    B --> C[Artifact Removal: z-score clipping]
+    C --> D[Windowing: 4s length, 50% overlap]
+    D --> E[Feature Extraction: Time, Freq, Wavelet]
+    E --> F[Classification: RF / SVM / KNN]
+    F --> G[Temporal Post-processing]
+    G --> H[Seizure Event Detection & Metrics]
 ```
 
 ### Key Features
@@ -83,34 +89,26 @@ All parameters are centralized in `config/project_config.m`:
 
 ## Project Structure
 
-```
-EEG_Seizure_Detection/
-  app/                  - GUI application
-  config/               - Project configuration
-  data/
-    raw/                - Raw EDF recordings (per patient)
-    processed/          - Extracted feature matrices
-  research/             - Literature review, references
-  results/
-    models/             - Saved classifier models
-    metrics/            - Evaluation results
-    figures/            - Generated plots
-  scripts/
-    setup_project.m     - Path setup and toolbox check
-    run_demo.m          - Single-patient demonstration
-    run_full_experiment.m - Multi-patient LOPO experiment
-    download_demo_data.m  - Sample data downloader
-    prepare_dataset.m     - Feature extraction pipeline
-  src/
-    data/               - EDF loader, annotation parser
-    preprocessing/      - Filtering, artifact removal
-    features/           - Feature extraction, window labeling
-    models/             - Classifier wrapper
-    detection/          - Temporal post-processing
-    evaluation/         - Metrics, LOPO validator
-    visualization/      - Plotting utilities
-  tests/                - Unit tests
-```
+- **`app/`** - GUI application
+- **`config/`** - Project configuration parameters
+- **`data/`**
+  - **`raw/`** - Raw EDF recordings (per patient)
+  - **`processed/`** - Extracted feature matrices
+- **`research/`** - Literature review and reference papers
+- **`results/`**
+  - **`models/`** - Saved classifier models
+  - **`metrics/`** - Evaluation results
+  - **`figures/`** - Generated plots
+- **`scripts/`** - Executable scripts (setup, demo, full experiment, data loading)
+- **`src/`**
+  - **`data/`** - EDF loader, annotation parser
+  - **`preprocessing/`** - Filtering, artifact removal
+  - **`features/`** - Feature extraction, window labeling
+  - **`models/`** - Classifier wrappers
+  - **`detection/`** - Temporal post-processing
+  - **`evaluation/`** - Metrics calculator, LOPO cross-validation
+  - **`visualization/`** - Plotting utilities
+- **`tests/`** - Unit tests for algorithms
 
 ## Limitations
 
