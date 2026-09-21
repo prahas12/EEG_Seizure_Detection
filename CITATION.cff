@@ -1,0 +1,9 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+authors:
+  - given-names: "Prahas"
+    alias: "prahas12"
+title: "EEG-Based Brain State and Seizure Detection System"
+version: 1.0.0
+date-released: 2026-09-21
+url: "https://github.com/prahas12/EEG_Seizure_Detection"
