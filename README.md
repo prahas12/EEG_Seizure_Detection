@@ -1,38 +1,11 @@
 # EEG-Based Brain State and Seizure Detection System
 
+![MATLAB](https://img.shields.io/badge/MATLAB-R2024b-blue.svg)
+![License](https://img.shields.io/badge/License-MIT-green.svg)
+![Dataset](https://img.shields.io/badge/Dataset-CHB--MIT-orange.svg)
+![Version](https://img.shields.io/badge/Version-1.0.0-lightgrey.svg)
+
 A MATLAB framework for processing scalp EEG recordings and detecting epileptic seizures using classical machine learning. Built around the CHB-MIT Scalp EEG Database.
-
-## Pipeline
-
-```
-Raw EDF --> Band-pass / Notch Filter --> Artifact Removal --> Windowing (4s, 50% overlap)
-  --> Feature Extraction (time + frequency + wavelet) --> Classification (RF / SVM / KNN)
-  --> Temporal Post-processing --> Seizure Event Detection --> Evaluation Metrics
-```
-
-## Features
-
-- Band-pass filtering (0.5 - 70 Hz), 60 Hz notch filter, z-score artifact clipping
-- 12 features per channel: variance, RMS, skewness, kurtosis, line length, 5 relative band powers (delta/theta/alpha/beta/gamma), wavelet energy, wavelet entropy
-- 4-second windows with 50% overlap and configurable seizure-overlap labeling threshold
-- Random Forest, SVM, and KNN classifiers
-- Temporal post-processing to suppress isolated false alarms
-- Leave-one-patient-out (LOPO) cross-validation for patient-independent evaluation
-- Interactive GUI with EEG waveform, spectrogram, band-power plot, and metrics panel
-
-## Dataset
-
-This repository does **not** include the full CHB-MIT dataset (approximately 42 GB). A single recording (`chb01_03.edf`, ~32 MB) is downloaded automatically by the demo script for local verification.
-
-The complete dataset can be obtained from PhysioNet:
-https://physionet.org/content/chbmit/1.0.0/
-
-## Requirements
-
-- MATLAB R2020a or newer (tested on R2024b)
-- Signal Processing Toolbox
-- Statistics and Machine Learning Toolbox
-- Wavelet Toolbox
 
 ## Quick Start
 
@@ -46,9 +19,32 @@ run_demo
 
 `run_demo` will download a sample EDF file if it is not already present, extract features, train a Random Forest classifier, print evaluation metrics, and open the GUI.
 
-The single-patient demonstration verifies that the processing and prediction pipeline works correctly. Its metrics should not be interpreted as patient-independent performance.
+**Note:** The single-patient demonstration verifies that the processing and prediction pipeline works correctly. Its metrics should not be interpreted as patient-independent performance.
 
-## Full Dataset Experiment
+## Pipeline & Features
+
+### Processing Pipeline
+```
+Raw EDF --> Band-pass / Notch Filter --> Artifact Removal --> Windowing (4s, 50% overlap)
+  --> Feature Extraction (time + frequency + wavelet) --> Classification (RF / SVM / KNN)
+  --> Temporal Post-processing --> Seizure Event Detection --> Evaluation Metrics
+```
+
+### Key Features
+- **Filtering:** Band-pass filtering (0.5 - 70 Hz), 60 Hz notch filter, z-score artifact clipping.
+- **Feature Extraction:** 12 features per channel (variance, RMS, skewness, kurtosis, line length, 5 relative band powers, wavelet energy, wavelet entropy) using 4-second windows with 50% overlap.
+- **Classification:** Random Forest, SVM, and KNN classifiers with configurable seizure-overlap labeling threshold.
+- **Evaluation:** Temporal post-processing to suppress isolated false alarms, and Leave-one-patient-out (LOPO) cross-validation for patient-independent evaluation.
+- **Visualization:** Interactive GUI with EEG waveform, spectrogram, band-power plot, and metrics panel.
+
+## Dataset Details
+
+This repository does **not** include the full CHB-MIT dataset (approximately 42 GB). A single recording (`chb01_03.edf`, ~32 MB) is downloaded automatically by the demo script for local verification.
+
+The complete dataset can be obtained from PhysioNet:
+https://physionet.org/content/chbmit/1.0.0/
+
+### Full Dataset Experiment
 
 To run leave-one-patient-out evaluation across multiple patients:
 
@@ -61,7 +57,29 @@ setup_project
 run_full_experiment
 ```
 
-Patient-independent evaluation requires at least two patients. With only one patient installed, the system defaults to single-patient demonstration mode.
+*Patient-independent evaluation requires at least two patients. With only one patient installed, the system defaults to single-patient demonstration mode.*
+
+## Requirements
+
+- MATLAB R2020a or newer (tested on R2024b)
+- Signal Processing Toolbox
+- Statistics and Machine Learning Toolbox
+- Wavelet Toolbox
+
+## Configuration
+
+All parameters are centralized in `config/project_config.m`:
+
+| Parameter | Default | Description |
+|-----------|---------|-------------|
+| `fs` | 256 Hz | Sampling frequency |
+| `filter_low` | 0.5 Hz | High-pass cutoff |
+| `filter_high` | 70 Hz | Low-pass cutoff |
+| `notch_freq` | 60 Hz | Notch filter frequency |
+| `window_size_sec` | 4 s | Window length |
+| `overlap_ratio` | 0.5 | Window overlap fraction |
+| `seizure_overlap_threshold` | 0.5 | Minimum temporal overlap to label a window as seizure |
+| `consecutive_windows` | 3 | Required consecutive positive predictions to trigger event |
 
 ## Project Structure
 
@@ -93,21 +111,6 @@ EEG_Seizure_Detection/
     visualization/      - Plotting utilities
   tests/                - Unit tests
 ```
-
-## Configuration
-
-All parameters are centralized in `config/project_config.m`:
-
-| Parameter | Default | Description |
-|-----------|---------|-------------|
-| `fs` | 256 Hz | Sampling frequency |
-| `filter_low` | 0.5 Hz | High-pass cutoff |
-| `filter_high` | 70 Hz | Low-pass cutoff |
-| `notch_freq` | 60 Hz | Notch filter frequency |
-| `window_size_sec` | 4 s | Window length |
-| `overlap_ratio` | 0.5 | Window overlap fraction |
-| `seizure_overlap_threshold` | 0.5 | Minimum temporal overlap to label a window as seizure |
-| `consecutive_windows` | 3 | Required consecutive positive predictions to trigger event |
 
 ## Limitations
 
