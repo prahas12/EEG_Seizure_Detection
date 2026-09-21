@@ -89,26 +89,28 @@ All parameters are centralized in `config/project_config.m`:
 
 ## Project Structure
 
-- **`app/`** - GUI application
-- **`config/`** - Project configuration parameters
-- **`data/`**
-  - **`raw/`** - Raw EDF recordings (per patient)
-  - **`processed/`** - Extracted feature matrices
-- **`research/`** - Literature review and reference papers
-- **`results/`**
-  - **`models/`** - Saved classifier models
-  - **`metrics/`** - Evaluation results
-  - **`figures/`** - Generated plots
-- **`scripts/`** - Executable scripts (setup, demo, full experiment, data loading)
-- **`src/`**
-  - **`data/`** - EDF loader, annotation parser
-  - **`preprocessing/`** - Filtering, artifact removal
-  - **`features/`** - Feature extraction, window labeling
-  - **`models/`** - Classifier wrappers
-  - **`detection/`** - Temporal post-processing
-  - **`evaluation/`** - Metrics calculator, LOPO cross-validation
-  - **`visualization/`** - Plotting utilities
-- **`tests/`** - Unit tests for algorithms
+```text
+├── app/                  # GUI application
+├── config/               # Project configuration parameters
+├── data/
+│   ├── raw/              # Raw EDF recordings (per patient)
+│   └── processed/        # Extracted feature matrices
+├── research/             # Literature review and reference papers
+├── results/
+│   ├── models/           # Saved classifier models
+│   ├── metrics/          # Evaluation results
+│   └── figures/          # Generated plots
+├── scripts/              # Executable scripts (setup, demo, full experiment, data loading)
+├── src/
+│   ├── data/             # EDF loader, annotation parser
+│   ├── preprocessing/    # Filtering, artifact removal
+│   ├── features/         # Feature extraction, window labeling
+│   ├── models/           # Classifier wrappers
+│   ├── detection/        # Temporal post-processing
+│   ├── evaluation/       # Metrics calculator, LOPO cross-validation
+│   └── visualization/    # Plotting utilities
+└── tests/                # Unit tests for algorithms
+```
 
 ## Limitations
 
