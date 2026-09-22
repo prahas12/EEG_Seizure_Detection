@@ -27,13 +27,13 @@ run_demo
 
 ```mermaid
 flowchart TD
-    A[Raw EDF Recording] --> B[Preprocessing: Band-pass & Notch Filter]
-    B --> C[Artifact Removal: z-score clipping]
-    C --> D[Windowing: 4s length, 50% overlap]
-    D --> E[Feature Extraction: Time, Freq, Wavelet]
-    E --> F[Classification: RF / SVM / KNN]
+    A[Raw EDF Recording] --> B[Preprocessing:<br>Band-pass & Notch Filter]
+    B --> C[Artifact Removal:<br>z-score clipping]
+    C --> D[Windowing:<br>4s length, 50% overlap]
+    D --> E[Feature Extraction:<br>Time, Freq, Wavelet]
+    E --> F[Classification:<br>RF / SVM / KNN]
     F --> G[Temporal Post-processing]
-    G --> H[Seizure Event Detection & Metrics]
+    G --> H[Seizure Event Detection<br>& Metrics]
 ```
 
 ### Key Features
